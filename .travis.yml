@@ -82,8 +82,9 @@ addons:
   coverity_scan:
     project:
       name: "collectd/collectd"
+      version: 1.0
       description: "Build submitted via Travis CI"
     notification_email: collectd-changes@verplant.org
     build_command_prepend: "./configure; make clean"
-    build_command: "make -j $(nproc)"
+    build_command: "make; if [[ -e /home/travis/build/collectd/collectd/cov-int/scm_log.txt ]]; then echo scm_log.txt; cat /home/travis/build/collectd/collectd/cov-int/scm_log.txt; echo '===='; fi"
     branch_pattern: coverity_scan
