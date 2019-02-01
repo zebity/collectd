@@ -5,7 +5,7 @@ env:
    - secure: "ZdWWp0XX3C4sLIp4lqeQTWC7vt+GsWjmyRiD17T9833NBAW4dddz310I6iyeXe6oX09ZFFiVIN4ogx9ANcNBx9jriGXI2/82nBhpxOJBebet8JCNS5VeTr4rDSfQOKP+Oc+ko5KbbghTuAtO2CFYiH3jZUcn4TdsYbVanf+TwUs="
 
 sudo: required
-dist: trusty
+dist: xenial
 compiler:
   - gcc
   - clang
@@ -77,6 +77,8 @@ script:
   - ./configure
   - make -j $(nproc)
   - make check
+after_script:
+  - if [[ -e /home/travis/build/collectd/collectd/cov-int/scm_log.txt ]]; then echo "=== scm_log.txt ==="; cat /home/travis/build/collectd/collectd/cov-int/scm_log.txt; echo '======'; fi"
 
 addons:
   coverity_scan:
@@ -86,5 +88,5 @@ addons:
       description: "Build submitted via Travis CI"
     notification_email: collectd-changes@verplant.org
     build_command_prepend: "./configure; make clean"
-    build_command: "make; if [[ -e /home/travis/build/collectd/collectd/cov-int/scm_log.txt ]]; then echo scm_log.txt; cat /home/travis/build/collectd/collectd/cov-int/scm_log.txt; echo '===='; fi"
+    build_command: "make"
     branch_pattern: coverity_scan
